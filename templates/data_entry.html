@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/data_entry.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1 class="margin-bottom">Add Hotel Booking Data</h1>
+
+{% if request.query_params.get('success') %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    Booking data added successfully!
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+
+<form method="post" action="/data-entry/">
+    <div class="form-section">
+        <h4>Basic Information</h4>
+        <div class="grid-row">
+            <div class="grid-half">
+                <label for="hotel" class="form-label">Hotel Type</label>
+                <select class="form-select" id="hotel" name="hotel" required>
+                    <option value="Resort Hotel">Resort Hotel</option>
+                    <option value="City Hotel">City Hotel</option>
+                </select>
+            </div>
+            <div class="grid-half">
+                <label for="is_canceled" class="form-label">Booking Status</label>
+                <select class="form-select" id="is_canceled" name="is_canceled" required>
+                    <option value="0">Active</option>
+                    <option value="1">Canceled</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid-row">
+            <div class="grid-half">
+                <label for="lead_time" class="form-label">Lead Time (days)</label>
+                <input type="number" class="form-control" id="lead_time" name="lead_time" min="0" required>
+            </div>
+            <div class="grid-half">
+                <label for="arrival_date" class="form-label">Arrival Date</label>
+                <input type="date" class="form-control" id="arrival_date" name="arrival_date" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h4>Stay Information</h4>
+        <div class="grid-row">
+            <div class="grid-half">
+                <label for="stays_in_weekend_nights" class="form-label">Weekend Nights</label>
+                <input type="number" class="form-control" id="stays_in_weekend_nights" name="stays_in_weekend_nights" min="0" required>
+            </div>
+            <div class="grid-half">
+                <label for="stays_in_week_nights" class="form-label">Week Nights</label>
+                <input type="number" class="form-control" id="stays_in_week_nights" name="stays_in_week_nights" min="0" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h4>Guest Information</h4>
+        <div class="grid-row">
+            <div class="grid-third">
+                <label for="adults" class="form-label">Adults</label>
+                <input type="number" class="form-control" id="adults" name="adults" min="0" required>
+            </div>
+            <div class="grid-third">
+                <label for="children" class="form-label">Children</label>
+                <input type="number" class="form-control" id="children" name="children" min="0" value="0">
+            </div>
+            <div class="grid-third">
+                <label for="babies" class="form-label">Babies</label>
+                <input type="number" class="form-control" id="babies" name="babies" min="0" value="0">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-section">
+        <h4>Booking Details</h4>
+        <div class="grid-row">
+            <div class="grid-third">
+                <label for="meal" class="form-label">Meal Type</label>
+                <select class="form-select" id="meal" name="meal" required>
+                    <option value="BB">Bed & Breakfast</option>
+                    <option value="HB">Half Board</option>
+                    <option value="FB">Full Board</option>
+                    <option value="SC">Self Catering</option>
+                </select>
+            </div>
+            <div class="grid-third">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" name="country" required>
+            </div>
+            <div class="grid-third">
+                <label for="market_segment" class="form-label">Market Segment</label>
+                <select class="form-select" id="market_segment" name="market_segment" required>
+                    <option value="Direct">Direct</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="Online TA">Online Travel Agent</option>
+                    <option value="Offline TA/TO">Offline Travel Agent</option>
+                    <option value="Groups">Groups</option>
+                    <option value="Aviation">Aviation</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="distribution_channel" class="form-label">Distribution Channel</label>
+                <select class="form-select" id="distribution_channel" name="distribution_channel" required>
+                    <option value="Direct">Direct</option>
+                    <option value="Corporate">Corporate</option>
+                    <option value="TA/TO">Travel Agent/Tour Operator</option>
+                    <option value="GDS">Global Distribution System</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="is_repeated_guest" class="form-label">Repeated Guest</label>
+                <select class="form-select" id="is_repeated_guest" name="is_repeated_guest" required>
+                    <option value="0">No</option>
+                    <option value="1">Yes</option>
+                </select>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="previous_cancellations" class="form-label">Previous Cancellations</label>
+                <input type="number" class="form-control" id="previous_cancellations" name="previous_cancellations" min="0" value="0">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="previous_bookings_not_canceled" class="form-label">Previous Non-canceled Bookings</label>
+                <input type="number" class="form-control" id="previous_bookings_not_canceled" name="previous_bookings_not_canceled" min="0" value="0">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="days_in_waiting_list" class="form-label">Days in Waiting List</label>
+                <input type="number" class="form-control" id="days_in_waiting_list" name="days_in_waiting_list" min="0" value="0">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h4>Room Information</h4>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="reserved_room_type" class="form-label">Reserved Room Type</label>
+                <select class="form-select" id="reserved_room_type" name="reserved_room_type" required>
+                    <option value="A">Type A</option>
+                    <option value="B">Type B</option>
+                    <option value="C">Type C</option>
+                    <option value="D">Type D</option>
+                    <option value="E">Type E</option>
+                    <option value="F">Type F</option>
+                    <option value="G">Type G</option>
+                    <option value="H">Type H</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="assigned_room_type" class="form-label">Assigned Room Type</label>
+                <select class="form-select" id="assigned_room_type" name="assigned_room_type" required>
+                    <option value="A">Type A</option>
+                    <option value="B">Type B</option>
+                    <option value="C">Type C</option>
+                    <option value="D">Type D</option>
+                    <option value="E">Type E</option>
+                    <option value="F">Type F</option>
+                    <option value="G">Type G</option>
+                    <option value="H">Type H</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="booking_changes" class="form-label">Booking Changes</label>
+                <input type="number" class="form-control" id="booking_changes" name="booking_changes" min="0" value="0">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="deposit_type" class="form-label">Deposit Type</label>
+                <select class="form-select" id="deposit_type" name="deposit_type" required>
+                    <option value="No Deposit">No Deposit</option>
+                    <option value="Refundable">Refundable</option>
+                    <option value="Non Refund">Non-Refundable</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h4>Financial & Additional Information</h4>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="agent" class="form-label">Agent ID</label>
+                <input type="text" class="form-control" id="agent" name="agent">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="adr" class="form-label">Average Daily Rate</label>
+                <input type="number" class="form-control" id="adr" name="adr" step="0.01" min="0" required>
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="required_car_parking_spaces" class="form-label">Required Car Parking Spaces</label>
+                <input type="number" class="form-control" id="required_car_parking_spaces" name="required_car_parking_spaces" min="0" value="0">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="total_of_special_requests" class="form-label">Total Special Requests</label>
+                <input type="number" class="form-control" id="total_of_special_requests" name="total_of_special_requests" min="0" value="0">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="customer_type" class="form-label">Customer Type</label>
+                <select class="form-select" id="customer_type" name="customer_type" required>
+                    <option value="Transient">Transient</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Transient-Party">Transient-Party</option>
+                    <option value="Group">Group</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="reservation_status" class="form-label">Reservation Status</label>
+                <select class="form-select" id="reservation_status" name="reservation_status" required>
+                    <option value="Check-Out">Check-Out</option>
+                    <option value="Canceled">Canceled</option>
+                    <option value="No-Show">No-Show</option>
+                </select>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="reservation_status_date" class="form-label">Reservation Status Date</label>
+                <input type="date" class="form-control" id="reservation_status_date" name="reservation_status_date" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center margin-top margin-bottom">
+        <button type="submit" class="btn btn-primary btn-large">Submit Booking Data</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('reserved_room_type').addEventListener('change', function() {
+        document.getElementById('assigned_room_type').value = this.value;
+    });
+
+    document.getElementById('reservation_status_date').valueAsDate = new Date();
+    
+    const nextMonth = new Date();
+    nextMonth.setMonth(nextMonth.getMonth() + 1);
+    document.getElementById('arrival_date').valueAsDate = nextMonth;
+    
+    document.getElementById('reservation_status').addEventListener('change', function() {
+        if (this.value === 'Canceled') {
+            document.getElementById('is_canceled').value = '1';
+        } else {
+            document.getElementById('is_canceled').value = '0';
+        }
+    });
+</script>
+{% endblock %}

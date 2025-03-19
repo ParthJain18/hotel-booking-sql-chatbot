@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Hotel Booking Analytics Dashboard</h1>
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card stats-card">
+            <div class="card-body">
+                <h5 class="card-title">Total Bookings</h5>
+                <h3>{{ stats.total_bookings }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stats-card">
+            <div class="card-body">
+                <h5 class="card-title">Active Bookings</h5>
+                <h3>{{ stats.active_bookings }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stats-card">
+            <div class="card-body">
+                <h5 class="card-title">Canceled Bookings</h5>
+                <h3>{{ stats.canceled_bookings }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card stats-card">
+            <div class="card-body">
+                <h5 class="card-title">Avg. Lead Time</h5>
+                <h3>{{ stats.avg_lead_time }} days</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<iframe src="{{ url_for('static', path='geo_dist.html') }}" width="100%" height="600px" style="border:none;"></iframe>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Revenue Trend</h5>
+                <div class="chart-container">
+                    <img src="{{ url_for('static', path='plots/total_revenue_trend.png') }}" class="chart-image" alt="Revenue Trend Chart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Cancellation Rate by Month</h5>
+                <div class="chart-container">
+                    <img src="{{ url_for('static', path='plots/cancellation_rate_trend.png') }}" class="chart-image" alt="Cancellation Rate Chart">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Average Lead Time Trend</h5>
+                <div class="chart-container">
+                    <img src="{{ url_for('static', path='plots/average_lead_time_trend.png') }}" class="chart-image" alt="Average Lead time Trend Chart">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Lead Time Distribution</h5>
+                <div class="chart-container">
+                    <img src="{{ url_for('static', path='plots/distribution_lead_time.png') }}" class="chart-image" alt="Distribution of lead time">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
