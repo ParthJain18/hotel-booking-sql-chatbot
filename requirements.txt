@@ -1,2 +1,11 @@
 fastapi
 python-multipart
+uvicorn
+sqlalchemy
+pandas
+numpy
+python-dotenv
+langchain-community 
+langchainhub 
+langgraph
+langchain[groq]
