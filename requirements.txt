@@ -1,6 +1,7 @@
 fastapi
 python-multipart
 uvicorn
+jinja2
 sqlalchemy
 pandas
 numpy
