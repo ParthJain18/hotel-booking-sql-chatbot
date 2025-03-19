@@ -17,7 +17,7 @@ additional_prompt=f"""
 
     7. reservation_status column has three possible values: 'Check-Out', 'Canceled', 'No-Show'.
 
-    8. month column has Dates in the format of 'YYYY-MM-dd'.
+    8. month column has Dates in the format of 'YYYY-MM-dd' and country column has country codes like IND, USA, etc.
     
     Now, please answer the question with a well-formed SQL query.
     

@@ -4,21 +4,24 @@ from services.sql_agent.sql_tool import write_query, execute_query, generate_ans
 import time
 from typing import Any, Dict
 from langgraph.prebuilt import create_react_agent
-import re
+from langgraph.checkpoint.memory import MemorySaver
 
 
+
+memory = MemorySaver()
 graph_builder = StateGraph(State).add_sequence(
     [write_query, execute_query, generate_answer]
 )
 graph_builder.add_edge(START, "write_query")
-graph = graph_builder.compile()
+graph = graph_builder.compile(checkpointer=memory)
+config = {"configurable": {"thread_id": "3"}}
 
 
 def query_agent(question: str) -> Dict[str, Any]:
     initial_state = {"question": question}
     
     start_time = time.time()
-    response = graph.invoke(initial_state)
+    response = graph.invoke(initial_state, config=config)
     # response = agent_executor.invoke(initial_state)
     # system_message = query_prompt_template.format(dialect="SQLite", top_k=5, table_info=db.get_table_info(), input=question)
     # agent_executor = create_react_agent(llm, tools, prompt=system_message)
