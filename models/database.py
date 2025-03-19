@@ -46,23 +46,19 @@ def get_db():
 def create_db_and_tables():
     Base.metadata.create_all(bind=engine)
     
-    # Import data from CSV if database is empty
     db = SessionLocal()
     if db.query(HotelBooking).count() == 0:
         csv_file = os.path.join("data", "hotel_data.csv")
         if os.path.exists(csv_file):
             df = pd.read_csv(csv_file)
             
-            # Handle date columns
             date_columns = ['reservation_status_date', 'check_in_date']
             for col in date_columns:
                 if col in df.columns:
                     df[col] = pd.to_datetime(df[col]).dt.date
             
-            # Convert dataframe to dict and insert to database
             for _, row in df.iterrows():
                 row_dict = row.to_dict()
-                # Filter to include only columns in our model
                 model_columns = set(HotelBooking.__table__.columns.keys()) - {'id'}
                 filtered_dict = {k: v for k, v in row_dict.items() if k in model_columns}
                 
