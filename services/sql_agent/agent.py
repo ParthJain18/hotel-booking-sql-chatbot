@@ -1,53 +1,70 @@
 from langgraph.graph import START, StateGraph
 from services.sql_agent.state.agent_state import State
-from services.sql_agent.sql_tool import write_query, execute_query, generate_answer, db, llm, tools, query_prompt_template
-import time
+from services.sql_agent.sql_tool import write_query, execute_query, llm
 from typing import Any, Dict
 from langgraph.prebuilt import create_react_agent
+from langchain_core.tools import tool
 from langgraph.checkpoint.memory import MemorySaver
+from services.sql_agent.additional_prompt import system_message
+import time
+import json
 
 
 
 memory = MemorySaver()
+
+
 graph_builder = StateGraph(State).add_sequence(
-    [write_query, execute_query, generate_answer]
+    [write_query, execute_query]
 )
 graph_builder.add_edge(START, "write_query")
-graph = graph_builder.compile(checkpointer=memory)
-config = {"configurable": {"thread_id": "3"}}
+graph = graph_builder.compile()
 
-
+@tool
 def query_agent(question: str) -> Dict[str, Any]:
+    """Takes a question in natural language as input and returns the SQL query and result related to it. It only supports questions related to the hotel booking data. Do NOT use this tool to DELETE or DROP any records or tables. And only use it when you need to infer something about the table or answer a user question based on the data.
+    It returns a dictionary with the following keys: "query", and "result".
+    """
     initial_state = {"question": question}
     
+    response = graph.invoke(initial_state)
+    
+    return {
+        "query": response["query"],
+        "result": response["result"]
+    }
+
+
+tools = [query_agent]
+agent_executor = create_react_agent(llm, tools, prompt=system_message, checkpointer=memory)
+
+def query_agent(question: str, history_id: str) -> Dict[str, Any]:
+    initial_state = {"messages": [("user", question)]}
+    query = ""
     start_time = time.time()
-    response = graph.invoke(initial_state, config=config)
-    # response = agent_executor.invoke(initial_state)
-    # system_message = query_prompt_template.format(dialect="SQLite", top_k=5, table_info=db.get_table_info(), input=question)
-    # agent_executor = create_react_agent(llm, tools, prompt=system_message)
+    response = agent_executor.invoke(
+        initial_state, 
+        config={"configurable": {"thread_id": history_id}}
+        )['messages']
 
-    # for step in agent_executor.stream({"messages": [{"role": "user", "content": question}]}, stream_mode="values",):
-    #     step["messages"][-1].pretty_print()
-
+    for message in response[-3:]:
+        if '"query":' in message.content:
+            message_content = json.loads(message.content)
+            query = message_content["query"]
 
     execution_time = time.time() - start_time
     
-    # print(response)
-    # print("\n=========\n")
+    print(response[-1].content)
+    print("\n=========\n")
 
     return {
-        "answer": response.get("answer", ""),
-        "query": response.get("query", ""),
-        "result": response.get("result", ""),
+        "query": query,
+        "answer": response[-1].content,
         "time_taken": f"{execution_time:.2f} seconds"
     }
 
 if __name__ == "__main__":
-    question = "What percent of customers have cancelled in the past year?"
-    result = query_agent(question)
-    
-    print(f"\nTime taken: {result['time_taken']}")
-    print(f"\nQuestion: {question}")
-    print(f"\nSQL Query:\n{result['query']}")
-    print(f"\nSQL Result:\n{result['result']}")
-    print(f"\nAnswer:\n{result['answer']}")
+    question = "How many bookings have been canceled so far in this year?"
+    print(query_agent(question))
+    question = "What did I ask before?"
+    print(query_agent(question))

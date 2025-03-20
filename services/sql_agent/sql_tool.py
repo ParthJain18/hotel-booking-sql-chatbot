@@ -15,17 +15,17 @@ load_dotenv()
 db = SQLDatabase.from_uri(DATABASE_URL)
 llm = init_chat_model("llama-3.3-70b-versatile", model_provider="groq")
 
-toolkit = SQLDatabaseToolkit(db=db, llm=llm)
+# toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 query_prompt_template = hub.pull("langchain-ai/sql-query-system-prompt")
 query_prompt_template += additional_prompt
 
-tools = toolkit.get_tools()
+# tools = toolkit.get_tools()
 
 def write_query(state: State):
     prompt = query_prompt_template.invoke(
         {
             "dialect": db.dialect,
-            "top_k": 10,
+            "top_k": 5,
             "table_info": db.get_table_info(),
             "input": state["question"],
         }

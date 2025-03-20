@@ -26,27 +26,27 @@ async def query(
     chat_query: ChatQuery,
     chat_db: Session = Depends(get_chat_db)
 ):
-    result = process_query(chat_query.query)
-    
-    if chat_query.history_id:  
-        add_message_to_history(chat_db, chat_query.history_id, {
-            "content": chat_query.query,
-            "is_user": True,
-            "timestamp": datetime.utcnow().isoformat()
-        })
-        add_message_to_history(chat_db, chat_query.history_id, {
-            "content": result,
-            "is_user": False,
-            "timestamp": datetime.utcnow().isoformat()
-        })
-    else:
+
+    history_id = chat_query.history_id
+    if not history_id:
         history = create_chat_history(chat_db, chat_query.query)
-        add_message_to_history(chat_db, history.id, {
-            "content": result,
-            "is_user": False,
-            "timestamp": datetime.utcnow().isoformat()
-        })
-        result["history_id"] = history.id
+        history_id = history.id
+    
+    add_message_to_history(chat_db, history_id, {
+        "content": chat_query.query,
+        "is_user": True,
+        "timestamp": datetime.utcnow().isoformat()
+    })
+    
+    result = process_query(chat_query.query, history_id)
+    
+    add_message_to_history(chat_db, history_id, {
+        "content": result,
+        "is_user": False,
+        "timestamp": datetime.utcnow().isoformat()
+    })
+    
+    result["history_id"] = history_id
     
     return JSONResponse(content=result)
 
