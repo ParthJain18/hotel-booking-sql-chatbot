@@ -13,6 +13,7 @@ async def proxy_request(request: Request, full_path: str):
     target_url = f"{NGROK_URL}/{full_path}"
     return RedirectResponse(url=target_url)
 
+
 @app.get("/", response_class=HTMLResponse)
 async def root():
     return RedirectResponse(url=NGROK_URL)
