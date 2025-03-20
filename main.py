@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
-from routes import dashboard, chat, data_entry
+from routes import dashboard, chat, data_entry, health
 from starlette.middleware.base import BaseHTTPMiddleware
 
 class SecurityHeadersMiddleware(BaseHTTPMiddleware):
@@ -22,6 +22,7 @@ templates = Jinja2Templates(directory="templates")
 app.include_router(dashboard.router)
 app.include_router(chat.router)
 app.include_router(data_entry.router)
+app.include_router(health.router)
 
 @app.get("/", response_class=RedirectResponse)
 async def root():
