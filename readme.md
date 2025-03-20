@@ -2,7 +2,7 @@
 
 An intelligent conversational interface for querying hotel booking data using natural language processing and SQL generation.
 
-Check out the deployed version on: [URL](https://logical-witty-ocelot.ngrok-free.app)
+Check out the deployed version on: [URL](https://logical-witty-ocelot.ngrok-free.app) (Please click on 'Visit Site' if prompted.)
 
 Video demo: [Youtube](https://youtu.be/mXhzI3hSETc)
 
@@ -58,7 +58,7 @@ The project uses a multi-stage pipeline architecture:
 ## 💻 Technologies
 
 - **LangGraph**: AI agent workflow management
-- **LLMs**: Natural language processing and understanding
+- **LLMs**: Natural language processing and understanding (Gemeni Flash 2.0)
 - **SQLite**: Database for hotel booking data
 
 ## 📊 Dataset
@@ -91,6 +91,11 @@ cd hotel-booking-chatbot
 pip install -r requirements.txt
 
 uvicorn main:app
+```
+
+### Create a .env file
+```
+GEMENI_API_KEY=
 ```
 
 #### Setup database (If needed)
