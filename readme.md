@@ -12,7 +12,7 @@ This hotel booking chatbot allows users to interact with hotel reservation data 
 
 - **Natural Language Understanding**: Process user queries about hotel booking data
 - **Automated SQL Generation**: Convert natural language to optimized SQL queries
-- **RAG**: Query any hotel related details from the sample file [`data\sample_hotel_brochure.txt`](data\sample_hotel_brochure.txt).
+- **RAG**: Query any hotel related details from the sample file [`data/sample_hotel_brochure.txt`](data/sample_hotel_brochure.txt).
 - **Data Analysis**: Extract insights from hotel bookings and reservations
 - **Contextual Responses**: Generate human-friendly answers from query results
 
@@ -42,13 +42,13 @@ The project uses a multi-stage pipeline architecture:
 
 ![Agent graph](assets/agent_graph.png)
 
-*Generated from [`services\sql_agent\agent.py`](services\sql_agent\agent.py)*
+*Generated from [`services/sql_agent/agent.py`](services/sql_agent/agent.py)*
 
 2. **SQL Writer**: Transforms natural language questions into SQL queries
 
 ![SQL agent](assets/sql_tool_graph.png)
 
-*Generated from [`services\sql_agent\agent.py`](services\sql_agent\agent.py)*
+*Generated from [`services/sql_agent/agent.py`](services/sql_agent/agent.py)*
 
 3. **Query Executor**: Runs SQL against the hotel database
 4. **Answer Generator**: Formats results into natural language responses
