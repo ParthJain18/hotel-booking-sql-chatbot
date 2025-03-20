@@ -39,11 +39,13 @@ You can find the complete notebook in [`notebooks/hotel-booking.ipynb`](notebook
 The project uses a multi-stage pipeline architecture:
 
 1. **Query Agent**: Processes user questions and coordinates the workflow
+
 ![Agent graph](assets/agent_graph.png)
 
 *Generated from [`services\sql_agent\agent.py`](services\sql_agent\agent.py)*
 
 2. **SQL Writer**: Transforms natural language questions into SQL queries
+
 ![SQL agent](assets/sql_tool_graph.png)
 
 *Generated from [`services\sql_agent\agent.py`](services\sql_agent\agent.py)*
