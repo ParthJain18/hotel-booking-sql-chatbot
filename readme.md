@@ -4,6 +4,8 @@ An intelligent conversational interface for querying hotel booking data using na
 
 Check out the deployed version on: [URL](https://logical-witty-ocelot.ngrok-free.app)
 
+Video demo: [Youtube](https://youtu.be/mXhzI3hSETc)
+
 ## 📝 Overview
 
 This hotel booking chatbot allows users to interact with hotel reservation data through natural language queries. The system interprets questions, generates appropriate SQL queries, executes them against the database, and provides human-readable answers based on the results.
