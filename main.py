@@ -7,6 +7,7 @@ NGROK_URL = "https://logical-witty-ocelot.ngrok-free.app"
 
 app = FastAPI()
 
+
 @app.api_route("/{full_path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
 async def proxy_request(request: Request, full_path: str):
     """Display apology page and redirect to NGROK"""
@@ -37,10 +38,12 @@ async def proxy_request(request: Request, full_path: str):
         </body>
     </html>
     """
-    
+
     return HTMLResponse(content=html_content)
 
 # Add a root route for direct access to the homepage
+
+
 @app.get("/", response_class=HTMLResponse)
 async def root():
     return RedirectResponse(url=NGROK_URL)
