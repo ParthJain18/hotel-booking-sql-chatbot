@@ -1,4 +1,3 @@
-from langchain_community.agent_toolkits import SQLDatabaseToolkit
 from models.database import DATABASE_URL
 from services.sql_agent.state.agent_state import State, QueryOutput
 from langchain_community.utilities import SQLDatabase
@@ -7,13 +6,15 @@ from langchain.chat_models import init_chat_model
 from langchain import hub
 from langchain_community.tools.sql_database.tool import QuerySQLDatabaseTool
 from services.sql_agent.additional_prompt import additional_prompt
-from langchain_core.prompts import PromptTemplate, StringPromptTemplate
-
+from langchain_google_genai import ChatGoogleGenerativeAI
+import os
 
 load_dotenv()
 
 db = SQLDatabase.from_uri(DATABASE_URL)
-llm = init_chat_model("llama-3.3-70b-versatile", model_provider="groq")
+# llm = init_chat_model("llama-3.1-8b-instant", model_provider="groq")
+# llm = init_chat_model("gemeni-2.0-flash", model_provider="google_genai")
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", api_key=os.getenv("GEMENI_API_KEY"), verbose=True)
 
 # toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 query_prompt_template = hub.pull("langchain-ai/sql-query-system-prompt")

@@ -1,9 +1,10 @@
 .chat-page {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 120px);
-    margin: -1rem;
+    height: 100%;
+    margin: 0;
     padding: 0 2rem;
+    flex-grow: 1;
 }
 
 .chat-header {
@@ -198,7 +199,6 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .chat-page {
-        height: calc(100vh - 100px);
         padding: 0 1rem;
     }
     
@@ -220,17 +220,65 @@
 .chat-container {
     display: flex;
     width: 100%;
-    height: calc(100vh - 120px);
-    margin: -1rem;
+    height: calc(100vh - 80px);
+    margin: 0;
+    position: fixed; 
+    top: 60px;
+    left: 0;
+    overflow: hidden;
 }
 
 .chat-sidebar {
     width: 280px;
+    min-width: 280px; /* Prevent shrinking */
+    max-width: 280px; /* Prevent expanding */
     background-color: #f0f2f5;
     border-right: 1px solid #e0e0e0;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;
+    height: 100%; /* Full height of parent */
+    overflow: hidden; /* Hide overflow */
+}
+
+.history-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Only scrollable content */
+    height: calc(100% - 50px); /* Subtract header height */
+}
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Full height of parent */
+    overflow: hidden; /* Prevent overflow */
+}
+
+.chat-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 0;
+    padding: 0 2rem;
+    flex-grow: 1;
+    overflow: hidden; /* Prevent overall page overflow */
+}
+
+.chat-messages {
+    flex-grow: 1;
+    overflow-y: auto; /* Only content scrolls */
+    height: calc(100% - 180px); /* Adjust based on header and input heights */
+    padding: 1.5rem;
+    background-color: #f9fafb;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.chat-input-container {
+    padding: 1rem;
+    background-color: #ffffff;
+    border-top: 1px solid #eaeaea;
+    min-height: 70px; /* Fixed height for input area */
 }
 
 .sidebar-header {
@@ -292,15 +340,6 @@
     flex-direction: column;
 }
 
-/* Adjust existing chat-page class */
-.chat-page {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
 /* Mobile responsiveness */
 @media (max-width: 768px) {
     .chat-container {
@@ -351,3 +390,4 @@
         display: none;
     }
 }
+

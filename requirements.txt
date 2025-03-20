@@ -10,3 +10,7 @@ langchain-community
 langchainhub 
 langgraph
 langchain[groq]
+faiss-cpu
+nltk
+sentence_transformers
+langchain-google-genai
