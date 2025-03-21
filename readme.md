@@ -15,6 +15,7 @@ This hotel booking chatbot allows users to interact with hotel reservation data 
 - **Natural Language Understanding**: Process user queries about hotel booking data
 - **Automated SQL Generation**: Convert natural language to optimized SQL queries
 - **RAG**: Query any hotel related details from the sample file [`data/sample_hotel_brochure.txt`](data/sample_hotel_brochure.txt).
+- **Graphs**: Generate graphs dynamically straight from the chat interface
 - **Data Analysis**: Extract insights from hotel bookings and reservations
 - **Contextual Responses**: Generate human-friendly answers from query results
 
@@ -27,7 +28,7 @@ This hotel booking chatbot allows users to interact with hotel reservation data 
 ### Chatbot
 ![sample chat](assets/image-4.png)
 ![Chatbot](assets/image-2.png)
-
+![pie chart](assets/image-6.png)
 ### Data Entry
 ![Data entry](assets/image-3.png)
 
