@@ -14,7 +14,7 @@ load_dotenv()
 db = SQLDatabase.from_uri(DATABASE_URL)
 # llm = init_chat_model("llama-3.1-8b-instant", model_provider="groq")
 # llm = init_chat_model("gemeni-2.0-flash", model_provider="google_genai")
-llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", api_key=os.getenv("GEMENI_API_KEY"), verbose=True)
+llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", api_key=os.getenv("GEMENI_API_KEY"), verbose=True, convert_system_message_to_human=True)
 
 # toolkit = SQLDatabaseToolkit(db=db, llm=llm)
 query_prompt_template = hub.pull("langchain-ai/sql-query-system-prompt")
