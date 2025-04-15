@@ -2,7 +2,7 @@
 
 An intelligent conversational interface for querying hotel booking data using natural language processing and SQL generation.
 
-Check out the deployed version on: [URL](https://logical-witty-ocelot.ngrok-free.app) (Please click on 'Visit Site' if prompted.)
+Check out the deployed version on: [URL](https://hotelchatbot.parthjain.works/)
 
 Video demo: [Youtube](https://youtu.be/mXhzI3hSETc)
 
